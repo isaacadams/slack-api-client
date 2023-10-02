@@ -2,6 +2,15 @@
 name = "slack-api-client"
 version = "0.1.0"
 edition = "2021"
+license = "MIT OR Apache-2.0"
+description = """
+slack api client
+
+Project homepage: https://github.com/isaacadams/slack-api-client
+"""
+readme = "README.md"
+homepage = "https://github.com/isaacadams/slack-api-client"
+repository = "https://github.com/isaacadams/slack-api-client"
 
 [lib]
 path = "src/lib.rs"
