@@ -1,3 +1,4 @@
+use crate::user;
 use reqwest::header;
 
 pub struct SlackClient {
@@ -70,5 +71,21 @@ impl SlackClient {
         log::info!("{}", response.status());
 
         Ok(response)
+    }
+
+    pub async fn get_user_profile(
+        &self,
+        user_id: &str,
+    ) -> Result<user::GetUserProfileResponse, reqwest::Error> {
+        let response = self
+            .client
+            .post("https://slack.com/api/users.profile.get")
+            .query(&[("user", user_id)])
+            .send()
+            .await?;
+
+        log::info!("{}", response.status());
+
+        response.json().await
     }
 }
