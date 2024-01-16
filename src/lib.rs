@@ -2,4 +2,4 @@ mod client;
 mod command;
 mod message;
 
-pub use {command::SlackCommandRequest, message::CreateMessage};
+pub use {client::SlackClient, command::SlackCommandRequest, message::CreateMessage};
