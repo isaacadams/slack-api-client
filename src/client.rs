@@ -62,9 +62,8 @@ impl SlackClient {
     ) -> Result<reqwest::Response, reqwest::Error> {
         let response = self
             .client
-            .delete("https://slack.com/api/chat.delete")
+            .post("https://slack.com/api/chat.delete")
             .query(&[("channel", channel_id), ("ts", message_ts)])
-            .header(header::CONTENT_TYPE, "application/json; charset=utf-8")
             .send()
             .await?;
 
