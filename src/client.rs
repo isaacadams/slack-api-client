@@ -1,7 +1,7 @@
 use reqwest::header;
 
 pub struct SlackClient {
-    client: reqwest::Client,
+    pub client: reqwest::Client,
 }
 
 impl SlackClient {
@@ -49,7 +49,32 @@ impl SlackClient {
             .send()
             .await?;
 
-        println!("{}", response.status());
+        log::info!("{}", response.status());
+
+        Ok(response)
+    }
+
+    /// https://api.slack.com/methods/chat.delete
+    pub async fn delete_message(
+        &self,
+        channel_id: &str,
+        message_ts: &str,
+    ) -> Result<reqwest::Response, reqwest::Error> {
+        let response = self
+            .client
+            .delete("https://slack.com/api/chat.delete")
+            .body(
+                serde_json::json!({
+                    "channel": channel_id,
+                    "ts": message_ts
+                })
+                .to_string(),
+            )
+            .header(header::CONTENT_TYPE, "application/json; charset=utf-8")
+            .send()
+            .await?;
+
+        log::info!("{}", response.status());
 
         Ok(response)
     }
