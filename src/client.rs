@@ -63,13 +63,7 @@ impl SlackClient {
         let response = self
             .client
             .delete("https://slack.com/api/chat.delete")
-            .body(
-                serde_json::json!({
-                    "channel": channel_id,
-                    "ts": message_ts
-                })
-                .to_string(),
-            )
+            .query(&[("channel", channel_id), ("ts", message_ts)])
             .header(header::CONTENT_TYPE, "application/json; charset=utf-8")
             .send()
             .await?;
