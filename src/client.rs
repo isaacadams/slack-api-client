@@ -86,6 +86,8 @@ impl SlackClient {
 
         log::info!("{}", response.status());
 
-        response.json().await
+        let json = response.json::<serde_json::Value>().await;
+        log::info!("get user profile response:\n{:#?}", json);
+        Ok(serde_json::from_value(json?).unwrap())
     }
 }

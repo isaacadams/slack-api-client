@@ -46,7 +46,7 @@ impl<T> SlackMessageBuilder<T> {
             .send()
             .await?;
 
-        println!("{}", response.status());
+        log::info!("{}", response.status());
 
         Ok(response)
     }
