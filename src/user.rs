@@ -33,5 +33,6 @@ pub struct Profile {
 #[derive(Debug, Deserialize)]
 pub struct GetUserProfileResponse {
     pub ok: bool,
-    pub profile: Profile,
+    pub profile: Option<Profile>,
+    pub error: Option<String>,
 }
