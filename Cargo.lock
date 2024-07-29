@@ -803,7 +803,7 @@ dependencies = [
 
 [[package]]
 name = "slack-api-client"
-version = "0.1.9"
+version = "0.1.91"
 dependencies = [
  "log",
  "reqwest",
