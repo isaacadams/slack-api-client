@@ -95,3 +95,11 @@ impl SlackResponse {
 }
 
 ```
+
+# Slack Api Reference
+
+Slack provides a feature-rich API to format messages sent to slack. It is called [`Block Kit`](https://api.slack.com/block-kit), and can be used to construct beautiful messages.
+
+- [block kit builder](https://app.slack.com/block-kit-builder/)
+- [elements reference](https://api.slack.com/reference/block-kit/block-elements#button)
+- [layout reference](https://api.slack.com/reference/block-kit/blocks)

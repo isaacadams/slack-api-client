@@ -37,7 +37,7 @@ impl SlackClient {
     /// errors: https://api.slack.com/methods/chat.postMessage#errors
     pub async fn send_message(
         &self,
-        request: String,
+        payload: &serde_json::Value,
         // w/ slack interactions/commands, a message can be sent to a provided response_url
         // https://api.slack.com/interactivity/handling#message_responses
         response_url: Option<&str>,
@@ -45,12 +45,11 @@ impl SlackClient {
         let response = self
             .client
             .post(response_url.unwrap_or("https://slack.com/api/chat.postMessage"))
-            .body(request)
-            .header(header::CONTENT_TYPE, "application/json; charset=utf-8")
+            .json(payload)
             .send()
             .await?;
 
-        log::info!("{}", response.status());
+        log::info!("{} {}", response.status(), response.url());
 
         Ok(response)
     }
@@ -68,26 +67,31 @@ impl SlackClient {
             .send()
             .await?;
 
-        log::info!("{}", response.status());
+        log::info!("{} {}", response.status(), response.url());
 
         Ok(response)
     }
 
-    pub async fn get_user_profile(
-        &self,
-        user_id: &str,
-    ) -> Result<user::GetUserProfileResponse, reqwest::Error> {
-        let response = self
+    pub async fn get_user_profile(&self, user_id: &str) -> GetUserProfileResult {
+        let result = self
             .client
             .post("https://slack.com/api/users.profile.get")
             .query(&[("user", user_id)])
             .send()
-            .await?;
+            .await;
 
-        log::info!("{}", response.status());
+        GetUserProfileResult {
+            result: result.inspect(|r| log::info!("{} {}", r.status(), r.url())),
+        }
+    }
+}
 
-        let json = response.json::<serde_json::Value>().await;
-        log::info!("get user profile response:\n{:#?}", json);
-        Ok(serde_json::from_value(json?).unwrap())
+pub struct GetUserProfileResult {
+    pub result: Result<reqwest::Response, reqwest::Error>,
+}
+
+impl GetUserProfileResult {
+    pub async fn body(self) -> Result<user::GetUserProfileResponse, reqwest::Error> {
+        self.result?.json().await
     }
 }

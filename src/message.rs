@@ -35,7 +35,7 @@ impl CreateMessage {
     ) -> Result<reqwest::Response, reqwest::Error> {
         let mut request = self.to_request();
         request["channel"] = serde_json::Value::String(channel);
-        client.send_message(request.to_string(), None).await
+        client.send_message(&request, None).await
     }
 
     pub async fn send_response_url(
@@ -45,8 +45,6 @@ impl CreateMessage {
     ) -> Result<reqwest::Response, reqwest::Error> {
         let request = self.to_request();
         // request["response_type"] = serde_json::Value::String("in_channel");
-        client
-            .send_message(request.to_string(), Some(response_url))
-            .await
+        client.send_message(&request, Some(response_url)).await
     }
 }
