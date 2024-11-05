@@ -13,7 +13,7 @@ let response = CreateMessage::Text("Hello World".to_string())
 ### Create a Block Message
 
 ```rust
-use slack_api_client::CreateMessage;
+use slack_api_client::*;
 
 pub fn hello_world() -> CreateMessage {
     CreateMessage::Blocks(serde_json::json!([{
@@ -24,6 +24,13 @@ pub fn hello_world() -> CreateMessage {
             "emoji": true
         }
     }]))
+}
+
+pub fn main () {
+    let client = SlackClient::new("<SLACK_BEARER_TOKEN>");
+    let response = hello_world()
+        .send_to_channel(&client, "<YOUR_CHANNEL_ID>".to_string())
+        .await?;
 }
 ```
 
