@@ -4,13 +4,24 @@ This is a CLI tool for sending messages to Slack channels. It supports sending t
 
 ## Installation
 
+Make sure the `SLACK_TOKEN` environment variable is set with your Slack bot token.
+   
+```bash
+export SLACK_TOKEN=xoxb-your-slack-bot-token
+```
+
+### via cargo install
+
+```sh
+cargo install --path ./cli --bin slack
+slack --help
+```
+
+### via source
+
 1. Clone the repository.
 2. Install dependencies and compile the code using `cargo build --release`.
-3. Make sure the `SLACK_TOKEN` environment variable is set with your Slack bot token.
-   
-   ```bash
-   export SLACK_TOKEN=xoxb-your-slack-bot-token
-   ```
+3. cargo run -p slack-cli
 
 ## Usage
 
