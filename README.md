@@ -1,5 +1,7 @@
 # Slack API
 
+Check out the [CLI documentation!](./cli/README.md)
+
 ```rust
 use slack_api_client::{SlackClient, CreateMessage};
 let client = SlackClient::new("<SLACK_BEARER_TOKEN>");
