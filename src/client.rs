@@ -45,6 +45,7 @@ impl SlackClient {
         let response = self
             .client
             .post(response_url.unwrap_or("https://slack.com/api/chat.postMessage"))
+            .header("Content-Type", "application/json; charset=utf-8")
             .json(payload)
             .send()
             .await?;
