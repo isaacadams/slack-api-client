@@ -13,7 +13,7 @@ export SLACK_TOKEN=xoxb-your-slack-bot-token
 ### via cargo install
 
 ```sh
-cargo install --path ./cli --bin slack
+cargo install slack-cli
 slack --help
 ```
 
